@@ -7,10 +7,10 @@ from textblob import TextBlob
 import json
 import matplotlib.pyplot as plt
 
-consumer_key = '7jfGCb9GU7A63IMrmEhFxTDkR'
-consumer_secret = 'AljFCAutO5VXSXeehMNsPJUEVyKJbKGuwe7oIvyK61yOvf0amr'
-access_token = '831373652931334144-uAm36GTJqYlAYSck2dPeqpFfVvggQcS'
-access_token_secret = 'u2KHnspQGLlc7yO9iW8ohiCfrDXqBAoEaDT9xe9VM3EMt'
+consumer_key = '****************************'
+consumer_secret = '**************************************'
+access_token = '**************************************************'
+access_token_secret = '***********************************************'
 
 count_p = 0
 count_nu = 0
