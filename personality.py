@@ -5,12 +5,18 @@ from tweepy import OAuthHandler
 from tweepy import Stream
 from textblob import TextBlob
 import json
-import re
+import matplotlib.pyplot as plt
 
 consumer_key = '7jfGCb9GU7A63IMrmEhFxTDkR'
 consumer_secret = 'AljFCAutO5VXSXeehMNsPJUEVyKJbKGuwe7oIvyK61yOvf0amr'
 access_token = '831373652931334144-uAm36GTJqYlAYSck2dPeqpFfVvggQcS'
 access_token_secret = 'u2KHnspQGLlc7yO9iW8ohiCfrDXqBAoEaDT9xe9VM3EMt'
+
+count_p = 0
+count_nu = 0
+count_ne = 0
+
+name = input("Enter twitter username:")
 
 class TwitterClient():
     def __init__(self, twitter_user=None):
@@ -37,10 +43,43 @@ class TwitterAuthenticator():
 if __name__ == "__main__":
     twitter_client = TwitterClient()
     api = twitter_client.get_twitter_client_api()
-    tweets = str(api.user_timeline(screen_name="ReallySwara", count=1))
-    print(tweets)
-    with open(r"C:\Users\Harsh Mistry\Documents\Twitter Personality analysis\data.json",'w') as outfile:
-        json.dump(tweets,outfile)
-    #twt = re.findall(r'\b#\w+',tweets)
+    tweets = api.user_timeline(screen_name=name, count=200, tweet_mode='extended')
+
+    def hashTag(jsonObj):
+        key = 'name'
+        if key in jsonObj._json.keys():
+            dx = jsonObj._json['name']
+            print(dx)
+        else:
+            return None
+
+    for tweet in tweets:
+        hashTag(tweet)
+        b = tweet._json['full_text']
+        analysis = TextBlob(b)
+        x = analysis.sentiment.polarity
+        if(x>0):
+            count_p += 1
+        elif(x==0):
+            count_nu += 1
+        elif(x<0):
+            count_ne += 1
+        else:
+            pass
+
     
-    
+left = [1,2,3]
+height = [count_p,count_nu,count_ne]
+label = ['positive','neutral','negative']
+plt.bar(left,height,tick_label=label,width = 0.5 ,color = ['green','blue','red'])
+plt.xlabel('personality') 
+plt.ylabel('no. of tweets') 
+if (count_p>count_nu and count_p>count_ne):
+    plt.title(name +  ' is positive')
+elif(count_nu>count_p and count_nu>count_ne):
+    plt.title(name+ ' is neutral')
+elif(count_ne>count_p and count_ne>count_nu):
+    plt.title(name+ ' is negative')
+else:
+    pass 
+plt.show()  
