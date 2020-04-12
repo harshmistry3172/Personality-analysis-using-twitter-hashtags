@@ -44,7 +44,7 @@ if __name__ == "__main__":
     twitter_client = TwitterClient()
     api = twitter_client.get_twitter_client_api()
     tweets = api.user_timeline(screen_name=name, count=200, tweet_mode='extended')
-
+"""
     def hashTag(jsonObj):
         key = 'name'
         if key in jsonObj._json.keys():
@@ -52,9 +52,10 @@ if __name__ == "__main__":
             print(dx)
         else:
             return None
+ """
 
     for tweet in tweets:
-        hashTag(tweet)
+       # hashTag(tweet)
         b = tweet._json['full_text']
         analysis = TextBlob(b)
         x = analysis.sentiment.polarity
